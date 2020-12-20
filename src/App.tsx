@@ -4,7 +4,7 @@ import {Main} from "./components/Main";
 
 export const App = () =>  {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <div className="container">
         <Main /> 
       </div>
