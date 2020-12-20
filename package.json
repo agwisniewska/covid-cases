@@ -1,7 +1,7 @@
 {
   "name": "covid-app",
   "version": "0.1.0",
-  "homepage": "http://agwisniewska.github.io/covid-app",
+  "homepage": "http://agwisniewska.github.io/covid-cases",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
