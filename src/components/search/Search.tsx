@@ -1,9 +1,8 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {useDataApi} from "../../hooks/useApi";
+import {useCasesState} from "../../context";
 import Autosuggest, { SuggestionsFetchRequestedParams, OnSuggestionSelected , RenderSuggestion, GetSuggestionValue, OnSuggestionsClearRequested, RenderInputComponent, InputProps, ChangeEvent, RenderSuggestionsContainer, RenderSuggestionsContainerParams } from 'react-autosuggest';
-import {useSearchDispatch} from '../../context/search-context';
-import {URLS} from '../../services';
-import { CountryData } from '../../features';
+import {useSearchDispatch, useSearchState} from '../../context/search-context';
+import {CovidCase} from '../../features';
 
 const renderInputComponent: RenderInputComponent<string> = (inputProps: InputProps<string>) => {
   //  TODO: Verify how to change it easily (the problem here that onChange type in inputProps is different than onChange in standard HTMLInput)
@@ -28,20 +27,25 @@ const renderSuggestionsContainer: RenderSuggestionsContainer = ({ containerProps
 }
 
 export const Search: FunctionComponent = () => {
-  const [{data}] = useDataApi(URLS.SUMMARY, []);
-  const [countries, setCountries] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
+  const {data} = useCasesState();
+  const [countries, setCountries] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [innerValue, setInnerValue] = useState('');
   const dispatch = useSearchDispatch();
+  const search = useSearchState();
 
   useEffect(() => {
-      const inner = data?.Countries?.map((covidCase: CountryData) => covidCase.Country);
-      if (inner) {
-        setSuggestions(inner)
-        setCountries(inner);
-      }
-     
-  }, [data])
+    const inner = data?.map((covidCase: CovidCase) => covidCase.Country);
+    setCountries(inner);
+}, [data])
+
+  useEffect(() => {
+
+    console.log('search', search);
+
+    setInnerValue(search);
+
+  }, [search])
 
   const getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
@@ -53,6 +57,7 @@ export const Search: FunctionComponent = () => {
   };
 
   const onSuggestionsFetchRequested = ({ value, reason }: SuggestionsFetchRequestedParams) => {
+
     setSuggestions(getSuggestions(value));
   }
 

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {useTable, useFilters, usePagination, Row, Cell } from 'react-table';
 import { Pagination} from './utils/pagination';
 import {DefaultColumnFilter} from './utils/filters';
-import { SearchProvider } from '../../context';
 
 export const Table = ({columns, data }: any) => {
   const defaultColumn = React.useMemo(
@@ -48,7 +47,7 @@ export const Table = ({columns, data }: any) => {
   };
 
   return (
-    <SearchProvider>
+    <Fragment>
     <table className="table" {...getTableProps()}>
       <thead className="thead-light">
         {headerGroups.map(headerGroup => (
@@ -90,6 +89,6 @@ export const Table = ({columns, data }: any) => {
     </table>
 
       <Pagination {...paginationProps} />
-    </SearchProvider>
+      </Fragment>
   )
 }

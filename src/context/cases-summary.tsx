@@ -2,13 +2,13 @@ import React, {createContext, useContext, useReducer, useEffect} from 'react';
 import axios from 'axios';
 import {Action, STATUS} from '../context';
 import {URLS} from '../services';
-import { CountryData } from '../features';
+import {State, Dispatch, CasesProviderProps} from '../context';
 
-type Dispatch = (state: any) => void
-type CasesProviderProps = {children: React.ReactNode};
+const assertUnreachable = (): never => {
+  throw new Error();
+}
 
-//  TODO: Change any to types!
-const dataFetchReducer = (state: any, action: Action) => {
+const dataFetchReducer = (state: State, action: Action) => {
   switch (action.type) {
     case STATUS.INIT:
       return {
@@ -21,7 +21,8 @@ const dataFetchReducer = (state: any, action: Action) => {
         ...state,
         isLoading: false,
         isError: false,
-        data: action.payload,
+        data: action?.payload?.Countries,
+        filteredData: action?.payload?.Countries,
       };
     case STATUS.FAILURE:
       return {
@@ -29,35 +30,28 @@ const dataFetchReducer = (state: any, action: Action) => {
         isLoading: false,
         isError: true,
       };
-    default:
-
-    //  add typescript never function !
-      throw new Error();
-  }
+    }
+  assertUnreachable();
 };
-
-
-//  TODO: Type data properly
-interface State {
-  isLoading: boolean;
-  isError: boolean;
-  data: any;
-}
 
 const CasesStateContext = createContext<State | undefined>(undefined);
 const CasesDispatchContext = createContext<Dispatch | undefined>(undefined);
 
 const CasesProvider = ({children}: CasesProviderProps) => {
+  //  @ts-ignore
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
     isError: false,
-    data: null,
+    data: [],
+    filteredData: []
   });
 
   useEffect(() => {
     let didCancel = false;
 
     const fetchData = async () => {
+        //  @ts-ignore
+
       dispatch({ type: STATUS.INIT });
 
       try {
@@ -70,11 +64,15 @@ const CasesProvider = ({children}: CasesProviderProps) => {
         );
 
         if (!didCancel) {
+            //  @ts-ignore
+
           dispatch({ type: STATUS.SUCCESS, payload: result.data });
         }
 
       } catch (error) {
         if (!didCancel) {
+            //  @ts-ignore
+
           dispatch({ type: STATUS.FAILURE });
 
         }

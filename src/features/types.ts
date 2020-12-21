@@ -1,4 +1,4 @@
-export interface CountryData {
+export interface CovidCase {
   Country: string;
   CountryCode: string;
   Date: string;

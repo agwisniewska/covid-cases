@@ -1,6 +1,6 @@
 import React, {useEffect, Fragment} from 'react';
 import {datasets} from './index';
-import {CountryData} from "../index";
+import {CovidCase} from "../index";
 import {useCasesState} from "../../context";
 import {Chart} from '../../components/chart';
 import {ButtonToNavigate} from "../../components/shared/button-to-navigate";
@@ -9,9 +9,11 @@ export const CovidCasesChart = () => {
   const {data, isError, isLoading}  = useCasesState();
 
   useEffect(() => {
-    datasets.labels = data?.Countries?.map((covidCase: CountryData) => covidCase.Country)
+                //  @ts-ignore
 
-    const covidCaes = data?.Countries?.forEach((covidCase: CountryData) => {
+    datasets.labels = data?.map((covidCase: CovidCase) => covidCase.Country)
+
+    const covidCaes = data?.forEach((covidCase: CovidCase) => {
             //  @ts-ignore
       datasets.datasets[0].data.push(covidCase['NewConfirmed']);
             //  @ts-ignore

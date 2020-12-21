@@ -11,6 +11,7 @@ export const DefaultColumnFilter = ({
 }: FilteredColumn) => {
 
   const state = useSearchState();
+  
   useEffect(() => {
     setFilter(state);
   }, [state]);

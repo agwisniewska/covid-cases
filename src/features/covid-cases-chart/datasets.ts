@@ -19,5 +19,15 @@ export const datasets = {
       backgroundColor: '#74B649',
       width: 5,
     },
-  ]
+  ],
+  options: {
+    responsive: true,
+    scales: {
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
 };
