@@ -1,21 +1,43 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useEffect, useState} from 'react';
 import { ButtonToNavigate } from '../../components/shared';
-import { TableContainer } from '../../components/table';
-import {useCasesState} from "../../context";
+import { Table } from '../../components/table';
+import {useCasesDispatch, useCasesState} from "../../context";
 import {columns} from './index';
+import {STATUS} from '../../context';
 
 export const CovidCasesTable = () => {
   const {data, isError, isLoading}  = useCasesState();
+  const dispatch = useCasesDispatch();
 
   const memoColumns = React.useMemo(() => columns, []);
 
-  const rows =  React.useMemo(() => data, [data]);
+  const memoData =  React.useMemo(() => data, [data]);
+
+  const [visibleRecords, setVisibleRecords] = useState([])
+
+  // TODO: Remove any
+ const updateState = (records: any[]) => {
+    console.log('filter', records);
+    dispatch({ 
+      type: STATUS.SUCCESS,
+      payload: {
+        Countries: records
+      }
+    })
+ };
+
+ useEffect(() => {
+  updateState(visibleRecords);
+ }, [visibleRecords]);
 
   return (
   <Fragment>
     <ButtonToNavigate path="/chart" title="View Chart" />
-    {rows && rows.length > 0 && <TableContainer columns={memoColumns} data={rows} />}
+      {/*  TODO: Move isLoading, isError to something like error boundary */}
+      {isLoading && <span> Loading... </span>}
+      {isError && <span> An error occurred. Try to refresh browser </span>}
+      {/*  @ts-ignore */}
+      {memoData?.length > 0 && <Table columns={memoColumns} data={memoData} setTableVisibleRecords={setVisibleRecords} />}
   </Fragment>
   )
-
-}
+  }

@@ -1,3 +1,3 @@
 export * from "./search-context";
-export * from './cases-summary';
+export * from './cases-context';
 export * from './types';

@@ -5,7 +5,7 @@ import {useSearchDispatch, useSearchState} from '../../context/search-context';
 import {CovidCase} from '../../features';
 
 const renderInputComponent: RenderInputComponent<string> = (inputProps: InputProps<string>) => {
-  //  TODO: Verify how to change it easily (the problem here that onChange type in inputProps is different than onChange in standard HTMLInput)
+  //  TODO: Verify how to change it (is it possible to do it easily?) (the problem here that onChange type in inputProps is different than onChange in standard HTMLInput)
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
     inputProps.onChange(event, { newValue: event.target.value, method: 'type' });
   };
@@ -28,23 +28,22 @@ const renderSuggestionsContainer: RenderSuggestionsContainer = ({ containerProps
 
 export const Search: FunctionComponent = () => {
   const {data} = useCasesState();
-  const [countries, setCountries] = useState<string[]>([]);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [innerValue, setInnerValue] = useState('');
+  
   const dispatch = useSearchDispatch();
   const search = useSearchState();
 
+  const [countries, setCountries] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  
+  const [innerValue, setInnerValue] = useState('');
+
   useEffect(() => {
-    const inner = data?.map((covidCase: CovidCase) => covidCase.Country);
-    setCountries(inner);
+    const countries = data?.map((covidCase: CovidCase) => covidCase.Country);
+    setCountries(countries);
 }, [data])
 
   useEffect(() => {
-
-    console.log('search', search);
-
     setInnerValue(search);
-
   }, [search])
 
   const getSuggestions = (value: string) => {
@@ -57,15 +56,12 @@ export const Search: FunctionComponent = () => {
   };
 
   const onSuggestionsFetchRequested = ({ value, reason }: SuggestionsFetchRequestedParams) => {
-
     setSuggestions(getSuggestions(value));
   }
 
   const onSuggestionsClearRequested: OnSuggestionsClearRequested = () => setSuggestions([]);
 
-
   const getSuggestionValue: GetSuggestionValue<string> = (suggestion: string) => suggestion;
-
 
   const renderSuggestion: RenderSuggestion<string> = (suggestion: string) => (
     <div>
@@ -84,14 +80,14 @@ export const Search: FunctionComponent = () => {
   const onSuggestionSelected: OnSuggestionSelected<string> = (event, { suggestion, suggestionValue }) => {
     dispatch(suggestionValue);
     setInnerValue(suggestionValue);
-   
   }
+
   const inputProps = {
     placeholder: 'Type a country',
     value: innerValue,
     onChange,
   };
-  
+
   return (
       <Autosuggest    suggestions={suggestions}
                       onSuggestionsFetchRequested={onSuggestionsFetchRequested}

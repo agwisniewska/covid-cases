@@ -6,14 +6,15 @@ import {Chart} from '../../components/chart';
 import {ButtonToNavigate} from "../../components/shared/button-to-navigate";
 
 export const CovidCasesChart = () => {
-  const {data, isError, isLoading}  = useCasesState();
+  const {filteredData, isError, isLoading}  = useCasesState();
 
   useEffect(() => {
+
+    //  TODO: Fix updating datasets automatically
                 //  @ts-ignore
+    datasets.labels = filteredData?.map((covidCase: CovidCase) => covidCase.Country)
 
-    datasets.labels = data?.map((covidCase: CovidCase) => covidCase.Country)
-
-    const covidCaes = data?.forEach((covidCase: CovidCase) => {
+    const covidCaes = filteredData?.forEach((covidCase: CovidCase) => {
             //  @ts-ignore
       datasets.datasets[0].data.push(covidCase['NewConfirmed']);
             //  @ts-ignore
@@ -21,11 +22,14 @@ export const CovidCasesChart = () => {
             //  @ts-ignore
       datasets.datasets[2].data.push(covidCase['NewRecovered']);
     })
-  }, [data])
+  }, [filteredData])
 
   return (<Fragment>
             <ButtonToNavigate title="View Table" path="/" />
-            <Chart data={datasets}/>
+            {/*  TODO: Move isLoading, isError to something like error boundary */}
+            {isLoading && <span> Loading... </span>}
+            {isError && <span> An error occurred. Try to refresh browser </span>}
+            {filteredData && <Chart data={datasets}/>}
 
   </Fragment>)
 }

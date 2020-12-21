@@ -8,7 +8,6 @@ interface ButtonToNavigate {
 
 export const ButtonToNavigate = ({ title, path }: ButtonToNavigate) => {
   const history = useHistory();
-  
   const onClick = () => {
     history.push(path);
   }

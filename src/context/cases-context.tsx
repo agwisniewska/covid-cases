@@ -1,8 +1,8 @@
 import React, {createContext, useContext, useReducer, useEffect} from 'react';
 import axios from 'axios';
-import {Action, STATUS} from '../context';
+import {Action, STATUS} from '.';
 import {URLS} from '../services';
-import {State, Dispatch, CasesProviderProps} from '../context';
+import {State, Dispatch, CasesProviderProps} from '.';
 
 const assertUnreachable = (): never => {
   throw new Error();

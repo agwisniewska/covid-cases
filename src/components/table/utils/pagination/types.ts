@@ -14,9 +14,7 @@ export type PaginationProps = Pick<UsePaginationInstanceProps<{}>,
 'canNextPage'
 > & Pick<UsePaginationState<{}>,
 'pageIndex'
-> & {
-  //  TODO: Verify if custom props are needed!
-}
+> 
 
 export enum DIRECTION {
   LEFT = 'LEFT',
