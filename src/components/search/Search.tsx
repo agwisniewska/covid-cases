@@ -1,16 +1,8 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {useDataApi} from "../../hooks/useApi";
 import Autosuggest, { SuggestionsFetchRequestedParams, OnSuggestionSelected , RenderSuggestion, GetSuggestionValue, OnSuggestionsClearRequested, RenderInputComponent, InputProps, ChangeEvent, RenderSuggestionsContainer, RenderSuggestionsContainerParams } from 'react-autosuggest';
-import {useSearchDispatch} from '../../context/SearchContext';
-import {covidSummaryUrl} from '../table';
-
-//  TODO: Move it to separated file
-
-export interface Country {
-  Country: string;
-  Slug: string;
-  ISO2: string;
-}
+import {useSearchDispatch} from '../../context/search-context';
+import {URLS} from '../../services';
 
 const renderInputComponent: RenderInputComponent<string> = (inputProps: InputProps<string>) => {
   //  TODO: Verify how to change it easily (the problem here that onChange type in inputProps is different than onChange in standard HTMLInput)
@@ -35,7 +27,7 @@ const renderSuggestionsContainer: RenderSuggestionsContainer = ({ containerProps
 }
 
 export const Search: FunctionComponent = () => {
-  const [{data}] = useDataApi(covidSummaryUrl, []);
+  const [{data}] = useDataApi(URLS.SUMMARY, []);
   const [countries, setCountries] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [innerValue, setInnerValue] = useState('');

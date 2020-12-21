@@ -1,2 +1,1 @@
-export * from "./Chart";
-export * from "./ChartContainer";
+export * from "./chart";

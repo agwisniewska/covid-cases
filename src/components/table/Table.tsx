@@ -1,12 +1,10 @@
-import React, {Fragment } from 'react';
-import {useTable, useFilters, usePagination, Row, Cell, UseTableOptions, UseFiltersColumnProps} from 'react-table';
-import {useSearchState} from "../../context/SearchContext";
+import React from 'react';
+import {useTable, useFilters, usePagination, Row, Cell } from 'react-table';
+import { Pagination} from './utils/pagination';
 import {DefaultColumnFilter} from './utils/filters';
+import { SearchProvider } from '../../context';
 
-
-export const Table = ({columns, data }: UseTableOptions<any>) => {
-  const search = useSearchState();
-
+export const Table = ({columns, data }: any) => {
   const defaultColumn = React.useMemo(
     () => ({
       Header: '',
@@ -15,32 +13,18 @@ export const Table = ({columns, data }: UseTableOptions<any>) => {
     []
   )
 
-  //  useTable
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
     footerGroups,
-    //@ts-ignore
     page,
-        //@ts-ignore
-
     canPreviousPage,
-        //@ts-ignore
-
     canNextPage,
-            //@ts-ignore
-
     pageOptions,
-            //@ts-ignore
-
     nextPage,
-            //@ts-ignore
-
     previousPage,
-            //@ts-ignore
-
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -48,18 +32,24 @@ export const Table = ({columns, data }: UseTableOptions<any>) => {
       data,
       defaultColumn,
       initialState: { pageIndex: 0 , pageSize: 20},
-
-
-    } as UseTableOptions<any>,
+    },
     useFilters,
-    usePagination
+    usePagination,
   )
-  
-  // Render the UI for your table
+
+  const paginationProps = {
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    nextPage,
+    previousPage,
+    pageIndex, 
+    pageSize,
+  };
+
   return (
-    <Fragment>
-    <table className="table"
-    {...getTableProps()}>
+    <SearchProvider>
+    <table className="table" {...getTableProps()}>
       <thead className="thead-light">
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -69,7 +59,7 @@ export const Table = ({columns, data }: UseTableOptions<any>) => {
              {/* Render the columns filter UI */}
 
     
-             <div>{(column as unknown as UseFiltersColumnProps<any>).canFilter && column.Header === 'Country' ? column.render('Filter') : null}</div>
+             <div>{column.canFilter && column.Header === 'Country' ? column.render('Filter') : null}</div>
            </th>
             ))}
           </tr>
@@ -99,22 +89,7 @@ export const Table = ({columns, data }: UseTableOptions<any>) => {
       </tfoot>
     </table>
 
-    <div className="pagination">
-       
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-       
-    </div>
-    </Fragment>
+      <Pagination {...paginationProps} />
+    </SearchProvider>
   )
 }

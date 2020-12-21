@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import {Search} from '../../../search/Search';
+import {Search} from '../../../search/search';
 import { UseFiltersColumnProps } from 'react-table';
-import { useSearchState } from '../../../../context/SearchContext';
+import { useSearchState } from '../../../../context';
 
 interface FilteredColumn {
   column: UseFiltersColumnProps<any>

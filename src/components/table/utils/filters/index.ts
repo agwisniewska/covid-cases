@@ -1,1 +1,1 @@
-export * from './DefaultColumnFilter';
+export * from './default-column-filter';

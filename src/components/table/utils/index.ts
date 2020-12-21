@@ -1,2 +1,2 @@
 export * from './filters';
-export * from '../types/types';
+export * from './pagination';
