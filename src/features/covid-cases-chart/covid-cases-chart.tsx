@@ -9,27 +9,17 @@ export const CovidCasesChart = () => {
   const {data, isError, isLoading}  = useCasesState();
 
   useEffect(() => {
-    if (data && data['Countries'] && data['Countries'].length > 0) {
-      const countries = data['Countries'].map((country: CountryData) => country.Country);
+    datasets.labels = data?.Countries?.map((covidCase: CountryData) => covidCase.Country)
 
-      datasets.labels = countries;
-
-      const covidCases = data['Countries'];
-      covidCases.forEach((covidCase: CountryData) => {
-        //  @ts-ignore
-        datasets.datasets[0].data.push(covidCase['NewConfirmed']);
-              //  @ts-ignore
-  
-        datasets.datasets[1].data.push(covidCase['NewDeaths']);
-              //  @ts-ignore
-  
-        datasets.datasets[2].data.push(covidCase['NewRecovered']);
-      });
-    }
+    const covidCaes = data?.Countries?.forEach((covidCase: CountryData) => {
+            //  @ts-ignore
+      datasets.datasets[0].data.push(covidCase['NewConfirmed']);
+            //  @ts-ignore
+      datasets.datasets[1].data.push(covidCase['NewDeaths']);
+            //  @ts-ignore
+      datasets.datasets[2].data.push(covidCase['NewRecovered']);
+    })
   }, [data])
-
-
-  console.log('datasets', datasets);
 
   return (<Fragment>
             <ButtonToNavigate title="View Table" path="/" />

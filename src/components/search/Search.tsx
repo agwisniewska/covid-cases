@@ -3,6 +3,7 @@ import {useDataApi} from "../../hooks/useApi";
 import Autosuggest, { SuggestionsFetchRequestedParams, OnSuggestionSelected , RenderSuggestion, GetSuggestionValue, OnSuggestionsClearRequested, RenderInputComponent, InputProps, ChangeEvent, RenderSuggestionsContainer, RenderSuggestionsContainerParams } from 'react-autosuggest';
 import {useSearchDispatch} from '../../context/search-context';
 import {URLS} from '../../services';
+import { CountryData } from '../../features';
 
 const renderInputComponent: RenderInputComponent<string> = (inputProps: InputProps<string>) => {
   //  TODO: Verify how to change it easily (the problem here that onChange type in inputProps is different than onChange in standard HTMLInput)
@@ -34,12 +35,12 @@ export const Search: FunctionComponent = () => {
   const dispatch = useSearchDispatch();
 
   useEffect(() => {
-    if (data && data['Countries']) {
-      const inner = data['Countries'].map((country:any) => country.Country);
-      setSuggestions(inner)
-      setCountries(inner);
-
-    }
+      const inner = data?.Countries?.map((covidCase: CountryData) => covidCase.Country);
+      if (inner) {
+        setSuggestions(inner)
+        setCountries(inner);
+      }
+     
   }, [data])
 
   const getSuggestions = (value: string) => {
@@ -58,10 +59,10 @@ export const Search: FunctionComponent = () => {
   const onSuggestionsClearRequested: OnSuggestionsClearRequested = () => setSuggestions([]);
 
 
-  const getSuggestionValue: GetSuggestionValue<string> = (suggestion) => suggestion;
+  const getSuggestionValue: GetSuggestionValue<string> = (suggestion: string) => suggestion;
 
 
-  const renderSuggestion: RenderSuggestion<string> = (suggestion) => (
+  const renderSuggestion: RenderSuggestion<string> = (suggestion: string) => (
     <div>
       {suggestion}
     </div>

@@ -9,11 +9,7 @@ export const CovidCasesTable = () => {
 
   const memoColumns = React.useMemo(() => columns, []);
 
-  const rows =  React.useMemo(() => {
-    if (data) {
-      return data['Countries']
-    }
-  }, [data]);
+  const rows =  React.useMemo(() => data?.Countries, [data]);
 
   return (
   <Fragment>
