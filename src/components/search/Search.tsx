@@ -88,6 +88,7 @@ export const Search: FunctionComponent = () => {
     onChange,
   };
 
+  //  TODO: Added styles to autosuggestions
   return (
       <Autosuggest    suggestions={suggestions}
                       onSuggestionsFetchRequested={onSuggestionsFetchRequested}

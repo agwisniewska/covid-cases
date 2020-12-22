@@ -3,8 +3,9 @@ import {useTable, useFilters, usePagination, Row, Cell } from 'react-table';
 import { Pagination} from './utils/pagination';
 import {DefaultColumnFilter} from './utils/filters';
 import {TableProps} from "./types";
+import Table from 'react-bootstrap/Table'
 
-export const Table = ({columns, data, setTableVisibleRecords }: TableProps) => {
+export const ReactTable = ({columns, data, setTableVisibleRecords }: TableProps) => {
   const defaultColumn = React.useMemo(() => ({
       Header: '',
       Filter: DefaultColumnFilter,
@@ -52,7 +53,7 @@ export const Table = ({columns, data, setTableVisibleRecords }: TableProps) => {
 
   return (
     <Fragment>
-      <table className="table" {...getTableProps()}>
+      <Table striped bordered hover {...getTableProps()}>
          {/* TODO: Moved this to Header.tsx file */}
         <thead className="thead-light">
           {headerGroups.map(headerGroup => (
@@ -60,7 +61,7 @@ export const Table = ({columns, data, setTableVisibleRecords }: TableProps) => {
               {headerGroup.headers.map(column => (
               <th scope="col" {...column.getHeaderProps()}>
               {column.render('Header')}
-              <div>{column.canFilter && column.Header === 'Country' ? column.render('Filter') : null}</div>
+                {column.canFilter && column.Header === 'Country'  && <div> {column.render('Filter')}</div>}
             </th>
               ))}
             </tr>
@@ -89,7 +90,7 @@ export const Table = ({columns, data, setTableVisibleRecords }: TableProps) => {
             </tr>
           ))}
         </tfoot>
-      </table>
+      </Table>
       <Pagination {...paginationProps} />
     </Fragment>
   )

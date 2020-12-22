@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useState} from 'react';
 import { ButtonToNavigate } from '../../components/shared';
-import { Table } from '../../components/table';
+import { ReactTable } from '../../components/table';
 import {useCasesDispatch, useCasesState} from "../../context";
 import {columns} from './index';
 import {STATUS} from '../../context';
@@ -26,10 +26,6 @@ export const CovidCasesTable = () => {
     })
  };
 
- useEffect(() => {
-  updateState(visibleRecords);
- }, [visibleRecords]);
-
   return (
   <Fragment>
     <ButtonToNavigate path="/chart" title="View Chart" />
@@ -37,7 +33,7 @@ export const CovidCasesTable = () => {
       {isLoading && <span> Loading... </span>}
       {isError && <span> An error occurred. Try to refresh browser </span>}
       {/*  @ts-ignore */}
-      {memoData?.length > 0 && <Table columns={memoColumns} data={memoData} setTableVisibleRecords={setVisibleRecords} />}
+      {memoData?.length > 0 && <ReactTable columns={memoColumns} data={memoData} setTableVisibleRecords={setVisibleRecords} />}
   </Fragment>
   )
   }

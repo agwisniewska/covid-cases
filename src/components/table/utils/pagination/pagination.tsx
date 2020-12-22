@@ -12,15 +12,17 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
   pageIndex,
 }: PaginationProps) => {
   return (
-    <div className="pagination">
+    <div className="d-flex align-items-center justify-content-end">
+      
       <PaginationButton onClick={previousPage} disabled={!canPreviousPage} direction={DIRECTION.LEFT}/>
-      <PaginationButton onClick={nextPage} disabled={!canNextPage} direction={DIRECTION.RIGHT} />
-       <span>
+      <span>
          Page
          <strong>
-           {pageIndex + 1} of {pageOptions.length}
-         </strong>{' '}
+         {' '} {pageIndex + 1} of {pageOptions.length}
+         </strong>
        </span>
+      <PaginationButton onClick={nextPage} disabled={!canNextPage} direction={DIRECTION.RIGHT} />
+       
     </div>
   )
 }

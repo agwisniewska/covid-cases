@@ -12,7 +12,7 @@ export const columns = [
     accessor: 'NewDeaths',
     Footer: (info: TableInstance) => {
       const total = React.useMemo(() => getTotalCount(info, 'NewDeaths'), [info.filteredRows])
-      return <>Total: <div>{total}</div></>
+      return <><b>Total:</b> <div>{total}</div></>
     },
   },
   {
@@ -20,7 +20,7 @@ export const columns = [
     accessor: 'NewRecovered',
     Footer: (info: TableInstance) => {
       const total = React.useMemo(() => getTotalCount(info, 'NewRecovered'), [info.filteredRows])
-      return <>Total: <div>{total}</div></>
+      return <><b>Total:</b> <div>{total}</div></>
     }
 
   }, {
@@ -28,7 +28,7 @@ export const columns = [
     accessor: 'NewConfirmed',
     Footer: (info: TableInstance) => {
       const total = React.useMemo(() => getTotalCount(info, 'NewConfirmed'), [info.filteredRows])
-      return <>Total: <div>{total}</div></>
+      return <><b>Total:</b> <div>{total}</div></>
     }
   }
 ];
