@@ -68,7 +68,7 @@ export const TableChartContainer: FunctionComponent<TableChartContainerProps> = 
 
   return (
     <Fragment>
-      <ModeButton onClick={dispatch} title={MODE.TABLE ? 'View chart' : 'View Table'}/>
+      <ModeButton onClick={dispatch} title={mode === MODE.TABLE ? 'Chart view' : 'Table view'}/>
        {(mode === MODE.CHART) && page && <Chart data={chart}/>}
        {( mode === MODE.TABLE )  && (data?.length > 0) &&  (
        <Table getTableProps={getTableProps}
