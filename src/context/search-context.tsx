@@ -1,10 +1,10 @@
 import React, {createContext, useState, useContext} from 'react';
 
-type Dispatch = (searchPhrase: string) => void
+type SearchDispatch = (searchPhrase: string) => void
 type SearchProviderProps = {children: React.ReactNode}
 
 const SearchStateContext = createContext<string | undefined>(undefined);
-const SearchDispatchContext = createContext<Dispatch | undefined>(undefined);
+const SearchDispatchContext = createContext<SearchDispatch | undefined>(undefined);
 
 const SearchProvider = ({children}: SearchProviderProps) => {
 

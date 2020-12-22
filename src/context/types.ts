@@ -13,6 +13,7 @@ export type Action =
 export type Dispatch = (action: Action) => void;
 export type CasesProviderProps = {children: React.ReactNode};
 
+
 export interface CovidPayloadData {
   Countries: CovidCase[],
 }

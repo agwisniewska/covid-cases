@@ -1,59 +1,29 @@
-import React, { Fragment, useEffect } from 'react';
-import {useTable, useFilters, usePagination, Row, Cell } from 'react-table';
-import { Pagination} from './utils/pagination';
-import {DefaultColumnFilter} from './utils/filters';
-import {TableProps} from "./types";
-import Table from 'react-bootstrap/Table'
+import React, { Fragment, FunctionComponent } from 'react';
+import { Pagination, PaginationProps} from './utils/pagination';
+import {default as LayoutTable} from 'react-bootstrap/Table'
+import {UseTableInstanceProps} from 'react-table';
 
-export const ReactTable = ({columns, data, setTableVisibleRecords }: TableProps) => {
-  const defaultColumn = React.useMemo(() => ({
-      Header: '',
-      Filter: DefaultColumnFilter,
-    }),
-    []
-  )
+type TableProps = Pick<UseTableInstanceProps<{}>, 
+'headerGroups' |
+'prepareRow' |
+'footerGroups' |
+'getTableProps' |
+'getTableBodyProps'
+> & PaginationProps
 
-  const {
+export const Table: FunctionComponent<TableProps> = ({
     getTableProps,
     getTableBodyProps,
-    headerGroups,
+    headerGroups, 
     prepareRow,
     footerGroups,
     page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    nextPage,
-    previousPage,
-    state: { pageIndex, pageSize },
-  } = useTable(
-    {
-      columns,
-      data,
-      defaultColumn,
-      initialState: { pageIndex: 0 , pageSize: 20},
-    },
-    useFilters,
-    usePagination,
-  )
-
-  useEffect(() => {
-   setTableVisibleRecords(page)
-  }, [setTableVisibleRecords, page])
-
-  const paginationProps = {
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    nextPage,
-    previousPage,
-    pageIndex, 
-    pageSize,
-  };
-
+    ...rest
+  }: TableProps) => {
+  
   return (
     <Fragment>
-      <Table striped bordered hover {...getTableProps()}>
+      <LayoutTable striped bordered hover {...getTableProps()}>
          {/* TODO: Moved this to Header.tsx file */}
         <thead className="thead-light">
           {headerGroups.map(headerGroup => (
@@ -68,11 +38,11 @@ export const ReactTable = ({columns, data, setTableVisibleRecords }: TableProps)
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-            {page.map((row: Row<object>, i: number) => {
+            {page.map((row, i) => {
                   prepareRow(row)
                   return (
                     <tr {...row.getRowProps()}>
-                      {row.cells.map((cell: Cell) => {
+                      {row.cells.map((cell) => {
                         return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                       })}
                     </tr>
@@ -82,7 +52,7 @@ export const ReactTable = ({columns, data, setTableVisibleRecords }: TableProps)
         <tfoot>
           {/* TODO: Moved this to Footer.tsx file */}
 
-          {footerGroups.map(group => (
+          {footerGroups.map(group => ( 
             <tr {...group.getFooterGroupProps()}>
               {group.headers.map(column => (
                 <td {...column.getFooterProps()}>{column.render('Footer')}</td>
@@ -90,8 +60,8 @@ export const ReactTable = ({columns, data, setTableVisibleRecords }: TableProps)
             </tr>
           ))}
         </tfoot>
-      </Table>
-      <Pagination {...paginationProps} />
+      </LayoutTable>
+      <Pagination {...rest} />
     </Fragment>
   )
 }

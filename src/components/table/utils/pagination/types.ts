@@ -11,7 +11,8 @@ export type PaginationProps = Pick<UsePaginationInstanceProps<{}>,
 'nextPage' |
 'pageOptions' |
 'canPreviousPage' |
-'canNextPage'
+'canNextPage' |
+'page'
 > & Pick<UsePaginationState<{}>,
 'pageIndex'
 > 

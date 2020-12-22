@@ -3,6 +3,7 @@ import {useCasesState} from "../../context";
 import Autosuggest, { SuggestionsFetchRequestedParams, OnSuggestionSelected , RenderSuggestion, GetSuggestionValue, OnSuggestionsClearRequested, RenderInputComponent, InputProps, ChangeEvent, RenderSuggestionsContainer, RenderSuggestionsContainerParams } from 'react-autosuggest';
 import {useSearchDispatch, useSearchState} from '../../context/search-context';
 import {CovidCase} from '../../features';
+import "./search.scss";
 
 const renderInputComponent: RenderInputComponent<string> = (inputProps: InputProps<string>) => {
   //  TODO: Verify how to change it (is it possible to do it easily?) (the problem here that onChange type in inputProps is different than onChange in standard HTMLInput)
@@ -11,7 +12,7 @@ const renderInputComponent: RenderInputComponent<string> = (inputProps: InputPro
   };
 
   return (
-  <div className="input-group mb-3">
+  <div className="input-group">
     <input {...inputProps} onChange={onChangeHandler} type="text" className="form-control" aria-label="Country" aria-describedby="inputGroup-sizing-default"/>
   </div>
   )

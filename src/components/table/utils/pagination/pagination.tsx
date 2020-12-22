@@ -3,14 +3,8 @@ import {PaginationProps} from '../pagination';
 import { PaginationButton } from './button';
 import { DIRECTION } from './types';
 
-export const Pagination: FunctionComponent<PaginationProps> = ({
-  previousPage,
-  nextPage,
-  pageOptions,
-  canNextPage,
-  canPreviousPage,
-  pageIndex,
-}: PaginationProps) => {
+export const Pagination: FunctionComponent<Omit<PaginationProps, 'page'>> = (props: Omit<PaginationProps, 'page'>) => {
+  const {previousPage, pageOptions, canPreviousPage, canNextPage, pageIndex, nextPage} = props;
   return (
     <div className="d-flex align-items-center justify-content-end">
       

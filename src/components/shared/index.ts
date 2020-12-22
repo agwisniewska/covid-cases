@@ -1,1 +1,1 @@
-export * from './button-to-navigate';
+export * from './mode-button';
