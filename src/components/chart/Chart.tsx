@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import {Bar, LinearComponentProps} from 'react-chartjs-2';
 
-export const Chart: FunctionComponent<any> = ({data}: LinearComponentProps) => (
+export const Chart: FunctionComponent<LinearComponentProps> = ({data}: LinearComponentProps) => (
       <Bar
         data={data}
         width={1000}
