@@ -1,15 +1,6 @@
 import React, { Fragment, FunctionComponent } from 'react';
-import { Pagination, PaginationProps} from './utils/pagination';
+import { Pagination, TableProps} from '../../components';
 import {default as LayoutTable} from 'react-bootstrap/Table'
-import {UseTableInstanceProps} from 'react-table';
-
-type TableProps = Pick<UseTableInstanceProps<{}>, 
-'headerGroups' |
-'prepareRow' |
-'footerGroups' |
-'getTableProps' |
-'getTableBodyProps'
-> & PaginationProps
 
 export const Table: FunctionComponent<TableProps> = ({
     getTableProps,

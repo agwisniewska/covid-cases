@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useReducer, useEffect} from 'react';
-import axios from 'axios';
-import {Action, STATUS} from '.';
+import {get} from '../services';
+import {Action, STATUS} from '../context';
 import {URLS} from '../services';
 import {State, Dispatch, CasesProviderProps} from '.';
 
@@ -49,37 +49,25 @@ const CasesProvider = ({children}: CasesProviderProps) => {
   useEffect(() => {
     let didCancel = false;
 
-    const fetchData = async () => {
-        //  @ts-ignore
-
+    const fetchCases = async () => {
       dispatch({ type: STATUS.INIT });
 
       try {
 
-        const result = await axios.get(URLS.SUMMARY, {
-          headers: {
-            'Authorization': 'X-Access-Token5cf9dfd5-3449-485e-b5ae-70a60e997864'
-           }
-          }
-        );
+        const result = await get(URLS.SUMMARY)
 
         if (!didCancel) {
-            //  @ts-ignore
-
           dispatch({ type: STATUS.SUCCESS, payload: result.data });
         }
 
       } catch (error) {
         if (!didCancel) {
-            //  @ts-ignore
-
-          dispatch({ type: STATUS.FAILURE });
+          dispatch({ type: STATUS.FAILURE, isError: error });
 
         }
       }
     };
- 
-    fetchData();
+    fetchCases();
 
   }, []);
 

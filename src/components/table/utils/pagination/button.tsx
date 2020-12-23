@@ -1,5 +1,5 @@
 import React, {Fragment, FunctionComponent} from 'react';
-import {PaginationButtonProps} from '../pagination';
+import { PaginationButtonProps} from '../../../../components';
 import { DIRECTION } from './types';
 import Button from 'react-bootstrap/Button';
 

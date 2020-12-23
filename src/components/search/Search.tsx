@@ -1,7 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {useCasesState} from "../../context";
+import {useCasesState, useSearchDispatch, useSearchState} from "../../context";
 import Autosuggest, { SuggestionsFetchRequestedParams, OnSuggestionSelected , RenderSuggestion, GetSuggestionValue, OnSuggestionsClearRequested, RenderInputComponent, InputProps, ChangeEvent, RenderSuggestionsContainer, RenderSuggestionsContainerParams } from 'react-autosuggest';
-import {useSearchDispatch, useSearchState} from '../../context/search-context';
 import {CovidCase} from '../../features';
 import "./search.scss";
 

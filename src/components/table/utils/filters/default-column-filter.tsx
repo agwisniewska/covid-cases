@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {Search} from '../../../search/search';
+import {Search} from '../../../../components';
 import { UseFiltersColumnProps } from 'react-table';
 import { useSearchState } from '../../../../context';
 

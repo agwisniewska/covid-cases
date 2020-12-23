@@ -1,6 +1,5 @@
 import React from 'react';
 import { TableInstance } from 'react-table';
-import { TableChartContainerProps } from '../../components';
 import {getTotalCount} from "./index";
 
 export const columns = [

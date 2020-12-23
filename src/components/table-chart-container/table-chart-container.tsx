@@ -1,25 +1,20 @@
-import React, {FunctionComponent, useEffect, Fragment, ReactNode} from 'react';
-import {Table, DefaultColumnFilter, MODE, ModeButton, ChartData, Chart } from '../components';
-import {CovidCase} from '../features';
-import {useModeState, useModeDispatch} from '../context';
-import {useTable, usePagination, useFilters, TableInstance, Column} from 'react-table';
+import React, {FunctionComponent, useEffect, Fragment } from 'react';
+import {Table,  MODE, ModeButton, Chart, TableChartContainerProps, getFilterColumn } from '../../components';
+import {CovidCase} from '../../features';
+import {useModeState, useModeDispatch} from '../../context';
+import {useTable, usePagination, useFilters } from 'react-table';
 
-export type TableChartContainerProps = Pick<TableInstance,
-'data'
-> & {
-  columns: Array<Column<{}>>,
-  chart: ChartData,
+const PAGINATION_CONFIG =  {
+  pageIndex: 0,
+  pageSize: 20
 }
 
 export const TableChartContainer: FunctionComponent<TableChartContainerProps> = ({columns, chart, data}: TableChartContainerProps) => {
   const mode = useModeState();
   const dispatch = useModeDispatch();
-  const defaultColumn = React.useMemo(() => ({
-    Header: '',
-    Filter: DefaultColumnFilter,
-  }),
-  []
-)
+
+  const memoDefaultColumn = React.useMemo(() => (getFilterColumn()), []);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -37,8 +32,8 @@ export const TableChartContainer: FunctionComponent<TableChartContainerProps> = 
     {
       columns,
       data,
-      defaultColumn,
-      initialState: { pageIndex: 0 , pageSize: 20},
+      defaultColumn: memoDefaultColumn,
+      initialState: { ...PAGINATION_CONFIG },
     },
     useFilters,
     usePagination,

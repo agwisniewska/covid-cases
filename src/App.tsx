@@ -6,6 +6,7 @@ import {CovidCases} from "./features";
 
 import { CasesProvider, ModeProvider, SearchProvider } from './context';
 
+//  TODO: Refactor handling mulitple contexts
 export const App = () =>  {
   return (
       <Container>
