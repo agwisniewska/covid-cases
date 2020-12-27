@@ -1,17 +1,20 @@
 import React, {FunctionComponent, useEffect, Fragment } from 'react';
-import {Table,  MODE, ModeButton, Chart, TableChartContainerProps, getFilterColumn } from '../../components';
-import {CovidCase} from '../../features';
-import {useModeState, useModeDispatch} from '../../context';
+import { MODE, ModeButton, Chart, TableChartContainerProps, getFilterColumn } from '../../components';
+import {CovidCase, CaseType} from '../../features';
+import {useModeState } from '../../context';
 import {useTable, usePagination, useFilters } from 'react-table';
+import Table from "../../components/table/table";
 
 const PAGINATION_CONFIG =  {
   pageIndex: 0,
   pageSize: 20
 }
+const prepareLabels = (originals: CovidCase[]) => {
+  return originals.map(((covidCase: CovidCase) => covidCase.Country));
+}
 
 export const TableChartContainer: FunctionComponent<TableChartContainerProps> = ({columns, chart, data}: TableChartContainerProps) => {
   const mode = useModeState();
-  const dispatch = useModeDispatch();
 
   const memoDefaultColumn = React.useMemo(() => (getFilterColumn()), []);
 
@@ -41,13 +44,17 @@ export const TableChartContainer: FunctionComponent<TableChartContainerProps> = 
 
   useEffect(() => {
     const originals: CovidCase[] = page?.map(record => record.original as CovidCase);
-    chart.labels = originals?.map(((covidCase: CovidCase) => covidCase.Country));
+    const cases = [CaseType.NewConfirmed, CaseType.NewDeaths, CaseType.NewRecovered]
+
+    chart!.labels = prepareLabels(originals);
 
     originals?.forEach((covidCase: CovidCase) => {
-      chart?.datasets![0].data!.push(covidCase['NewConfirmed']);
-      chart?.datasets![1].data!.push(covidCase['NewDeaths']);
-      chart?.datasets![2].data!.push(covidCase['NewRecovered']);
+      cases.forEach((c, i) => {
+        chart?.datasets![i].data!.push(covidCase[c as keyof typeof CaseType]);
+
+      })
   })
+
   }, [page]);
 
   const paginationProps = {
@@ -58,21 +65,19 @@ export const TableChartContainer: FunctionComponent<TableChartContainerProps> = 
     previousPage,
     pageIndex,
     pageSize,
-    page
   };
 
   return (
     <Fragment>
-      <ModeButton onClick={dispatch} title={mode === MODE.TABLE ? 'Chart view' : 'Table view'}/>
-       {(mode === MODE.CHART) && page && <Chart data={chart}/>}
-       {( mode === MODE.TABLE )  && (data?.length > 0) &&  (
-       <Table getTableProps={getTableProps}
-              getTableBodyProps={getTableBodyProps}
-              headerGroups={headerGroups}
-              prepareRow={prepareRow}
-              footerGroups={footerGroups}
-              {...paginationProps}/>
-            )}
+      <ModeButton />
+       {(mode === MODE.CHART) && <Chart data={chart}/>}
+       {( mode === MODE.TABLE )  && (
+       <Table getTableProps={getTableProps}>
+              <Table.Header headerGroups={headerGroups} />
+              <Table.Body prepareRow={prepareRow} getTableBodyProps={getTableBodyProps} page={page}/>
+              <Table.Footer footerGroups={footerGroups} />
+              <Table.Pagination {...paginationProps} />
+        </Table>)}
     </Fragment>
   )
 }

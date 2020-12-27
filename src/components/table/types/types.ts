@@ -1,10 +1,6 @@
-import {PaginationProps} from '../../../components';
-import {UseTableInstanceProps} from 'react-table';
+import { ReactNode } from 'react';
+import { UseTableInstanceProps } from 'react-table';
 
-export type TableProps = Pick<UseTableInstanceProps<{}>, 
-'headerGroups' |
-'prepareRow' |
-'footerGroups' |
-'getTableProps' |
-'getTableBodyProps'
-> & PaginationProps
+export type TableProps = Pick<UseTableInstanceProps<{}>,
+'getTableProps'
+>;

@@ -1,8 +1,7 @@
-import React, { FunctionComponent } from 'react';
-import {PaginationProps, PaginationButton} from '../../../../components';
-import { DIRECTION } from './types';
+import React from 'react';
+import {PaginationProps, PaginationButton, DIRECTION} from '../../../../components';
 
-export const Pagination: FunctionComponent<Omit<PaginationProps, 'page'>> = (props: Omit<PaginationProps, 'page'>) => {
+export const Pagination = (props: PaginationProps) => {
   const {previousPage, pageOptions, canPreviousPage, canNextPage, pageIndex, nextPage} = props;
   return (
     <div className="d-flex align-items-center justify-content-end">

@@ -1,58 +1,24 @@
-import React, { Fragment, FunctionComponent } from 'react';
-import { Pagination, TableProps} from '../../components';
-import {default as LayoutTable} from 'react-bootstrap/Table'
+import React, { Fragment, PropsWithChildren } from 'react';
+import { TableProps, Pagination, TableHeader, TableFooter, TableBody } from '../../components';
+import {default as LayoutTable} from 'react-bootstrap/Table';
 
-export const Table: FunctionComponent<TableProps> = ({
+const Table = (props: PropsWithChildren<TableProps>) => {
+   const {
     getTableProps,
-    getTableBodyProps,
-    headerGroups, 
-    prepareRow,
-    footerGroups,
-    page,
-    ...rest
-  }: TableProps) => {
-  
+  } = props;
+
   return (
     <Fragment>
       <LayoutTable striped bordered hover {...getTableProps()}>
-         {/* TODO: Moved this to Header.tsx file */}
-        <thead className="thead-light">
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-              <th scope="col" {...column.getHeaderProps()}>
-              {column.render('Header')}
-                {column.canFilter && column.Header === 'Country'  && <div> {column.render('Filter')}</div>}
-            </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-                  prepareRow(row)
-                  return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                      })}
-                    </tr>
-                  )
-            })}
-        </tbody>
-        <tfoot>
-          {/* TODO: Moved this to Footer.tsx file */}
-
-          {footerGroups.map(group => ( 
-            <tr {...group.getFooterGroupProps()}>
-              {group.headers.map(column => (
-                <td {...column.getFooterProps()}>{column.render('Footer')}</td>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
+        {props.children}
       </LayoutTable>
-      <Pagination {...rest} />
     </Fragment>
   )
-}
+} 
+
+Table.Header = TableHeader;
+Table.Footer = TableFooter;
+Table.Body = TableBody;
+Table.Pagination = Pagination;
+
+export default Table;

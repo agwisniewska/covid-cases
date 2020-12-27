@@ -1,15 +1,19 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
-import {ModeButtonProps} from ".";
+import {MODE} from "./types";
+import { useModeState, useModeDispatch } from '../../../context';
 
-export const ModeButton = ({ title, onClick }: ModeButtonProps) => {
+export const ModeButton = () => {
+  const mode = useModeState();
+  const modeDispatch = useModeDispatch();
+  
   return (
     <Button
       variant="info"
       type="button"
       className="btn btn-info"
-      onClick={onClick}>
-      {title}
+      onClick={modeDispatch}>
+      {mode === MODE.TABLE ? 'Chart view' : 'Table view'}
     </Button>
   );
 }
