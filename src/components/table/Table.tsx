@@ -1,4 +1,4 @@
-import React, { Fragment, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { TableProps, Pagination, TableHeader, TableFooter, TableBody } from '../../components';
 import {default as LayoutTable} from 'react-bootstrap/Table';
 
@@ -8,11 +8,9 @@ const Table = (props: PropsWithChildren<TableProps>) => {
   } = props;
 
   return (
-    <Fragment>
       <LayoutTable striped bordered hover {...getTableProps()}>
         {props.children}
       </LayoutTable>
-    </Fragment>
   )
 } 
 

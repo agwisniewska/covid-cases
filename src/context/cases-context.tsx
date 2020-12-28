@@ -38,7 +38,6 @@ const CasesStateContext = createContext<State | undefined>(undefined);
 const CasesDispatchContext = createContext<Dispatch | undefined>(undefined);
 
 const CasesProvider = ({children}: CasesProviderProps) => {
-  //  @ts-ignore
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
     isError: false,

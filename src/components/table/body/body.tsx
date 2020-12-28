@@ -2,7 +2,6 @@ import { UsePaginationInstanceProps, UsePaginationState, UseTableInstanceProps }
 
 type BodyProps = Pick<UseTableInstanceProps<{}>, 'getTableBodyProps' | 'prepareRow'> & Pick<UsePaginationInstanceProps<{}>, 'page'>;
 
-
 export const TableBody = ({getTableBodyProps, page, prepareRow}: BodyProps) => {
   return (
     <tbody {...getTableBodyProps()}>

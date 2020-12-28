@@ -1,11 +1,11 @@
 import React, {FunctionComponent, useEffect, Fragment } from 'react';
-import { MODE, ModeButton, Chart, TableChartContainerProps, getFilterColumn } from '../../components';
+import { MODE, ModeButton, Chart, TableChartContainerProps } from '../../components';
 import {CovidCase, CaseType} from '../../features';
 import {useModeState } from '../../context';
 import {useTable, usePagination, useFilters } from 'react-table';
 import Table from "../../components/table/table";
 
-const PAGINATION_CONFIG =  {
+const initialState =  {
   pageIndex: 0,
   pageSize: 20
 }
@@ -15,8 +15,6 @@ const prepareLabels = (originals: CovidCase[]) => {
 
 export const TableChartContainer: FunctionComponent<TableChartContainerProps> = ({columns, chart, data}: TableChartContainerProps) => {
   const mode = useModeState();
-
-  const memoDefaultColumn = React.useMemo(() => (getFilterColumn()), []);
 
   const {
     getTableProps,
@@ -35,8 +33,7 @@ export const TableChartContainer: FunctionComponent<TableChartContainerProps> = 
     {
       columns,
       data,
-      defaultColumn: memoDefaultColumn,
-      initialState: { ...PAGINATION_CONFIG },
+      initialState: { ...initialState },
     },
     useFilters,
     usePagination,
