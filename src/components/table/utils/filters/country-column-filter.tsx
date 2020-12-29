@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {Search} from '../../..';
 import { UseFiltersColumnProps } from 'react-table';
 import { useSearchState } from '../../../../context';
+import {useDidUpdateEffect} from "../../../../hooks";
 
 interface FilteredColumn {
   column: UseFiltersColumnProps<{}>,
@@ -9,12 +10,8 @@ interface FilteredColumn {
 export const CountryColumnFilter = ({
   column: { setFilter }
 }: FilteredColumn) => {
-  const state = useSearchState();
-
-  useEffect(() => {
-    setFilter(state);
-  }, [state]);
-
+  const phrase = useSearchState();
+  useDidUpdateEffect(setFilter, phrase)
   return (
     <Search />
     )

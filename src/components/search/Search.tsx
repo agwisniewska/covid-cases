@@ -88,17 +88,16 @@ export const Search: FunctionComponent = () => {
     onChange,
   };
 
-  //  TODO: Added styles to autosuggestions
   return (
-      <Autosuggest    suggestions={suggestions}
-                      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                      getSuggestionValue={getSuggestionValue}
-                      renderSuggestion={renderSuggestion}
-                      onSuggestionSelected={onSuggestionSelected}
-                      onSuggestionsClearRequested={onSuggestionsClearRequested}
-                      renderInputComponent={renderInputComponent}
-                      renderSuggestionsContainer={renderSuggestionsContainer}
-                      inputProps={inputProps}
+      <Autosuggest  suggestions={suggestions}
+                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    onSuggestionSelected={onSuggestionSelected}
+                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                    renderInputComponent={renderInputComponent}
+                    renderSuggestionsContainer={renderSuggestionsContainer}
+                    inputProps={inputProps}
       />
   )
 }
