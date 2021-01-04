@@ -2,6 +2,8 @@ import React, { PropsWithChildren } from 'react';
 import { TableProps, Pagination, TableHeader, TableFooter, TableBody } from '../../components';
 import {default as LayoutTable} from 'react-bootstrap/Table';
 
+  //  TODO: Refactor prop getter types
+
 const Table = (props: PropsWithChildren<TableProps>) => {
    const {
     getTableProps,

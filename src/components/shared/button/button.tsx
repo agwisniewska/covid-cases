@@ -1,7 +1,7 @@
 import React, {MouseEvent} from 'react';
 import {default as LayoutButton} from 'react-bootstrap/Button'
 
-interface ButtonProps {
+export interface ButtonProps {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   title?: string;
   variant?: string;

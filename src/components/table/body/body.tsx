@@ -1,4 +1,4 @@
-import { UsePaginationInstanceProps, UsePaginationState, UseTableInstanceProps } from 'react-table';
+import { UsePaginationInstanceProps, UseTableInstanceProps } from 'react-table';
 
 type BodyProps = Pick<UseTableInstanceProps<{}>, 'getTableBodyProps' | 'prepareRow'> & Pick<UsePaginationInstanceProps<{}>, 'page'>;
 

@@ -19,14 +19,4 @@ export const datasets: ChartData = {
       backgroundColor: '#74B649',
     },
   ],
-  options: {
-    responsive: true,
-    scales: {
-      xAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  }
 };
