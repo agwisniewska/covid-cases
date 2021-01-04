@@ -1,6 +1,6 @@
 import { UsePaginationInstanceProps, UseTableInstanceProps } from 'react-table';
 
-type BodyProps = Pick<UseTableInstanceProps<{}>, 'getTableBodyProps' | 'prepareRow'> & Pick<UsePaginationInstanceProps<{}>, 'page'>;
+export type BodyProps = Pick<UseTableInstanceProps<{}>, 'getTableBodyProps' | 'prepareRow'> & Pick<UsePaginationInstanceProps<{}>, 'page'>;
 
 export const TableBody = ({getTableBodyProps, page, prepareRow}: BodyProps) => {
   return (

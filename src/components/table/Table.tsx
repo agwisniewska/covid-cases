@@ -1,20 +1,15 @@
 import React, { PropsWithChildren } from 'react';
-import { TableProps, Pagination, TableHeader, TableFooter, TableBody } from '../../components';
+import { Pagination, TableHeader, TableFooter, TableBody } from '../../components';
+import {TableBodyProps} from "react-table";
 import {default as LayoutTable} from 'react-bootstrap/Table';
 
-  //  TODO: Refactor prop getter types
-
-const Table = (props: PropsWithChildren<TableProps>) => {
-   const {
-    getTableProps,
-  } = props;
-
+const Table = ({children}: PropsWithChildren<{}>) => {
   return (
-      <LayoutTable striped bordered hover {...getTableProps()}>
-        {props.children}
+      <LayoutTable striped bordered hover>
+        {children}
       </LayoutTable>
   )
-} 
+}
 
 Table.Header = TableHeader;
 Table.Footer = TableFooter;

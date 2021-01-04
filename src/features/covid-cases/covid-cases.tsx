@@ -17,7 +17,7 @@ export const CovidCases: FunctionComponent = () => {
     <Fragment>
       {isLoading && <div>Loading... </div>}
       {isError && <div> An error occured. Please try again later</div>}
-      <TableChartContainer columns={memoColumns} chart={datasets} data={memoData} initialState={initialState} />
+      {!isLoading && !isError && <TableChartContainer columns={memoColumns} chart={datasets} data={memoData} initialState={initialState} />}
     </Fragment>
 
   )
