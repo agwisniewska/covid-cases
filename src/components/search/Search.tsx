@@ -55,7 +55,7 @@ export const Search: FunctionComponent = () => {
     );
   };
 
-  const onSuggestionsFetchRequested = ({ value, reason }: SuggestionsFetchRequestedParams) => {
+  const onSuggestionsFetchRequested = ({ value }: SuggestionsFetchRequestedParams) => {
     setSuggestions(getSuggestions(value));
   }
 

@@ -1,1 +1,1 @@
-export * from './mode-button';
+export * from './button';

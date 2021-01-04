@@ -1,4 +1,4 @@
-import {TableInstance, Column} from 'react-table';
+import {TableInstance, Column, UsePaginationState} from 'react-table';
 import { ChartData } from '../../components';
 
 export type TableChartContainerProps = Pick<TableInstance,
@@ -6,4 +6,10 @@ export type TableChartContainerProps = Pick<TableInstance,
 > & {
   columns: Array<Column<{}>>,
   chart: ChartData,
+  initialState?: Pick<UsePaginationState<{}>, 'pageSize' |  'pageIndex'>,
+}
+
+export enum MODE {
+  TABLE = 'TABLE',
+  CHART = 'CHART'
 }

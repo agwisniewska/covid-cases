@@ -1,20 +1,17 @@
 import React, {FunctionComponent, useEffect, Fragment } from 'react';
-import { MODE, ModeButton, Chart, TableChartContainerProps } from '../../components';
+import { MODE, Button, Chart, TableChartContainerProps } from '../../components';
 import {CovidCase, CaseType} from '../../features';
-import {useModeState } from '../../context';
+import {useModeState, useModeDispatch } from '../../context';
 import {useTable, usePagination, useFilters } from 'react-table';
 import Table from "../../components/table/table";
 
-const initialState =  {
-  pageIndex: 0,
-  pageSize: 20
-}
 const prepareLabels = (originals: CovidCase[]) => {
   return originals.map(((covidCase: CovidCase) => covidCase.Country));
 }
 
-export const TableChartContainer: FunctionComponent<TableChartContainerProps> = ({columns, chart, data}: TableChartContainerProps) => {
+export const TableChartContainer: FunctionComponent<TableChartContainerProps> = ({columns, chart, data, initialState}: TableChartContainerProps) => {
   const mode = useModeState();
+  const modeDispatch = useModeDispatch();
 
   const {
     getTableProps,
@@ -33,7 +30,7 @@ export const TableChartContainer: FunctionComponent<TableChartContainerProps> = 
     {
       columns,
       data,
-      initialState: { ...initialState },
+      initialState: { ...initialState || null },
     },
     useFilters,
     usePagination,
@@ -64,14 +61,25 @@ export const TableChartContainer: FunctionComponent<TableChartContainerProps> = 
     pageSize,
   };
 
+  const buttonProps = {
+    title: mode === MODE.TABLE ? 'Chart view' : 'Table view',
+    onClick: modeDispatch,
+  }
+
+  const tableBodyProps = {
+    prepareRow,
+    getTableBodyProps,
+    page
+  }
+
   return (
     <Fragment>
-      <ModeButton />
+      <Button {...buttonProps} />
        {(mode === MODE.CHART) && <Chart data={chart}/>}
        {( mode === MODE.TABLE )  && (
        <Table getTableProps={getTableProps}>
               <Table.Header headerGroups={headerGroups} />
-              <Table.Body prepareRow={prepareRow} getTableBodyProps={getTableBodyProps} page={page}/>
+              <Table.Body {...tableBodyProps} />
               <Table.Footer footerGroups={footerGroups} />
               <Table.Pagination {...paginationProps} />
         </Table>)}
