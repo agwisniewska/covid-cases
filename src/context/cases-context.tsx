@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useReducer, useEffect} from 'react';
-import {get} from '../services';
+import {axiosFetch} from '../services';
 import {Action, STATUS} from '../context';
 import {URLS} from '../services';
 import {State, Dispatch, CasesProviderProps} from '.';
@@ -51,9 +51,9 @@ const CasesProvider = ({children}: CasesProviderProps) => {
     const fetchCases = async () => {
       dispatch({ type: STATUS.INIT });
 
-      try {
+      try { 
 
-        const result = await get(URLS.SUMMARY)
+        const result = await axiosFetch(URLS.SUMMARY)
 
         if (!didCancel) {
           dispatch({ type: STATUS.SUCCESS, payload: result.data });
